@@ -1,0 +1,47 @@
+[
+    {
+        "name": "Honey Crisp",
+        "sku": "123AB",
+        "type": "fruit",
+        "subType": "apple",
+        "unitWeight": 100,
+        "quantity": 1000,
+        "price": 1.24,
+        "currency": "EUR",
+        "available": true
+    },
+    {
+        "name": "Clementine",
+        "sku": "456CD",
+        "type": "fruit",
+        "subType": "orange",
+        "unitWeight": 100,
+        "quantity": 500,
+        "price": 0.56,
+        "currency": "EUR",
+        "available": true
+    },
+    {
+        "name": "Seedless Watermelon",
+        "sku": "789EF",
+        "type": "fruit",
+        "subType": "watermelon",
+        "unitWeight": 1000,
+        "quantity": 10000,
+        "price": 2.35,
+        "currency": "EUR",
+        "available": false
+    },
+    {
+        "name": "Fresh roast",
+        "sku": "012GH",
+        "type": "coffee",
+        "origin": "Ethiopia",
+        "roast": "medium",
+        "unitWeight": 1000,
+        "quantity": 10000,
+        "price": 10.24,
+        "currency": "EUR",
+        "available": true
+    }
+]
