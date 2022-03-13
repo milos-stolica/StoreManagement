@@ -11,9 +11,9 @@ Koriscen .NET Core 3.1, pa je potreban ASP.NET Core Runtime (download link https
 4. Odradice se build i pokretanje aplikacije - server slusa na http://localhost:3000
 
 # Kreiranje porudzbine (Postman ili neki slican tool)
-# Method POST
-# URL http://localhost:3000/api/orders
-# Body
+Method POST
+URL http://localhost:3000/api/orders
+Body
 [
     {
         "ProductSku": "123AB",
@@ -28,4 +28,5 @@ Koriscen .NET Core 3.1, pa je potreban ASP.NET Core Runtime (download link https
 # Unit testovi u folderu StoreManagement.Tests
 Pustiti kroz Visual Studio (vjerovatno ne moze stariji od 2019 - ja sam koristio Visual Studio Community 2019 - version 16.9) - Test -> Test explorer 
 
-# U slucaju problema mozete mi pisati na milos_stolica@hotmail.com
+# U slucaju problema mozete mi pisati na mail
+milos_stolica@hotmail.com
