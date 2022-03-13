@@ -83,7 +83,6 @@ namespace StoreManagement.API.Repositories
             return skuToQuantity.Select(kvp => DecreaseProductQuantityUnsafe(kvp.Key, kvp.Value)).ToList();
         }
 
-        //If negative quantity decrease product quantity for that value, otherwise increase
         private ExtendedEntity<Product> DecreaseProductQuantityUnsafe(string sku, float quantity)
         {
             Product product = GetProductUnsafe(sku);
