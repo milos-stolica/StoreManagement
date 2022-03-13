@@ -9,10 +9,11 @@ Koriscen .NET Core 3.1, pa je potreban ASP.NET Core Runtime (download link https
 2. git pull https://github.com/milos-stolica/StoreManagement.git main
 3. Navigirati se u folder StoreManagement.API i odraditi komandu dotnet run StoreManagement.API.csproj
 4. Odradice se build i pokretanje aplikacije - server slusa na http://localhost:3000
+5. Takodje, moguce je pokrenuti i direktno iz Visual Studio IDE-a
 
 # Kreiranje porudzbine (Postman ili neki slican tool)
-Method POST
-URL http://localhost:3000/api/orders
+Method POST,
+URL http://localhost:3000/api/orders,
 Body
 [
     {
