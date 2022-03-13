@@ -11,6 +11,9 @@ using StoreManagement.API.Utils;
 
 namespace StoreManagement.API.Services.OrderingService
 {
+    /// <summary>
+    /// Service for making orders and providing order information
+    /// </summary>
     public class OrderingService : IOrderingService
     {
         #region Fields
@@ -39,6 +42,9 @@ namespace StoreManagement.API.Services.OrderingService
 
         #region IOrderingService methods
 
+        /// <summary>
+        /// Make order and pass order details information to caller through callback
+        /// </summary>
         public void MakeOrder(IEnumerable<OrderCreationDTO> orderList, Action<OrderDetails> orderFinished)
         {
             ArgumentValidator.ThrowIfNull(orderList, nameof(orderList));

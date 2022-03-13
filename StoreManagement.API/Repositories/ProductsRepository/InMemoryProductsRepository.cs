@@ -8,6 +8,9 @@ using StoreManagement.API.Utils;
 
 namespace StoreManagement.API.Repositories
 {
+    /// <summary>
+    /// Stores products in memory and enables CRUD operations on them
+    /// </summary>
     public class InMemoryProductsRepository : IProductsRepository
     {
         #region Fields
@@ -32,6 +35,11 @@ namespace StoreManagement.API.Repositories
 
         #region IProductsRepository members
 
+        /// <summary>
+        /// Decreases quantity on products from input (thread safe).
+        /// If there is any "Not Found" or "Insufficient Quantity" product do not update any (transaction)
+        /// Returns entity with appropriate status for every product from input
+        /// </summary>
         public IEnumerable<ExtendedEntity<Product>> DecreaseProductsQuantity(IDictionary<string, float> skuToQuantity)
         {
             ArgumentValidator.ThrowIfNull(skuToQuantity, nameof(skuToQuantity));

@@ -14,7 +14,7 @@ namespace StoreManagement.API.Services
 
         public string Currency { get; set; }
 
-        public int UnitWeight { get; set; }
+        public float UnitWeight { get; set; }
 
         public EntityStatus Status { get; set; }
     }
