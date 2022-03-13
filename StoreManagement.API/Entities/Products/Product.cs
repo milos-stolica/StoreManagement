@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace StoreManagement.API.Entities
+﻿namespace StoreManagement.API.Entities
 {
+    //todo data annotations
     public class Product
     {
         public string Sku { get; set; }
@@ -14,7 +13,8 @@ namespace StoreManagement.API.Entities
 
         public string Currency { get; set; }
 
-        public bool Available { get; set; } //todo what about this, is it related to Quantity?
+        //todo what about this, is this related to Quantity?
+        public bool Available { get; set; }
 
         public float Quantity { get; set; }
 

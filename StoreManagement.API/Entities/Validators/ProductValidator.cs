@@ -1,4 +1,5 @@
-﻿using StoreManagement.API.Common.Extensions;
+﻿using Microsoft.Extensions.Logging;
+using StoreManagement.API.Common.Extensions;
 using StoreManagement.API.Utils;
 
 namespace StoreManagement.API.Entities
@@ -15,6 +16,15 @@ namespace StoreManagement.API.Entities
         private const string currencyPattern = @"^[A-Z]{3}$";
 
         #endregion Fields
+
+        #region Constructor
+
+        public ProductValidator(ILogger<ProductValidator> logger) : base(logger)
+        {
+
+        }
+
+        #endregion Constructor
 
         #region ProductValidatorBase members
 

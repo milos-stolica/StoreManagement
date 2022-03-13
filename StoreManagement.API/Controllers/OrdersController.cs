@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using StoreManagement.API.Models;
 using StoreManagement.API.Services;
 
-//todo logging and error handling
-//todo unit tests
-
 namespace StoreManagement.API.Controllers
 {
     [ApiController]
@@ -45,7 +42,7 @@ namespace StoreManagement.API.Controllers
                 case OrderStatus.Successful:
                     return Ok(orderingService.GenerateReceipt(orderDetails));
                 default:
-                    return null; //todo check this
+                    throw new ArgumentException($"Unexpected order status received: {orderDetails.Status}");
             }
         }
 

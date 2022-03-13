@@ -71,13 +71,11 @@ namespace StoreManagement.API.Repositories
                           .Union(outOfStockProducts);
             }
 
-            //todo what if product is not available? Not defined well
-
             //Everything is ok, decrease quantity and return products
             return skuToQuantity.Select(kvp => DecreaseProductQuantityUnsafe(kvp.Key, kvp.Value)).ToList();
         }
 
-        //If negative quantity - decrease product quantity for that value, otherwise increase
+        //If negative quantity decrease product quantity for that value, otherwise increase
         private ExtendedEntity<Product> DecreaseProductQuantityUnsafe(string sku, float quantity)
         {
             Product product = GetProductUnsafe(sku);

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using StoreManagement.API.Common;
 using StoreManagement.API.Entities;
 using StoreManagement.API.Repositories;
@@ -40,9 +41,10 @@ namespace StoreManagement.API
                                                    },
                                                    new Dictionary<string, IValidator>
                                                    {
-                                                       { ProductTypes.Fruit, new FruitValidator() },
-                                                       { ProductTypes.Coffee, new CoffeeValidator() }
-                                                   }
+                                                       { ProductTypes.Fruit, new FruitValidator(x.GetRequiredService<ILogger<FruitValidator>>()) },
+                                                       { ProductTypes.Coffee, new CoffeeValidator(x.GetRequiredService<ILogger<CoffeeValidator>>()) }
+                                                   },
+                                                   x.GetRequiredService<ILogger<JsonProductsLoader>>()
                                                    ));
 
             services.AddSingleton<IOrderDetailsFactory, OrderDetailsFactory>();

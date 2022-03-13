@@ -1,10 +1,22 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
 using StoreManagement.API.Utils;
 
 namespace StoreManagement.API.Entities
 {
     public class FruitValidator : ProductValidator
     {
+        #region Constructor
+
+        public FruitValidator(ILogger<FruitValidator> logger) : base(logger)
+        {
+
+        }
+
+        #endregion Constructor
+
+        #region ProductValidator members
+
         protected override bool ValidateProduct(object validatableObject)
         {
             ArgumentValidator.ThrowOnUnexpectedType(validatableObject, typeof(Fruit));
@@ -16,5 +28,7 @@ namespace StoreManagement.API.Entities
             return base.ValidateProduct(validatableObject) &&
                    !LongerThanDefault(fruit.Subtype);
         }
+
+        #endregion ProductValidator
     }
 }
