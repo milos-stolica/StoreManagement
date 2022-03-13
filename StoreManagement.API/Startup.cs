@@ -32,8 +32,9 @@ namespace StoreManagement.API
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddSingleton<IProductsLoader>(x => 
+            services.AddSingleton<IProductsLoader>(x =>
                             new JsonProductsLoader("TestData.json",
+                                                   new FileReader(),
                                                    new Dictionary<string, IJsonValidatableProductFactory>
                                                    {
                                                        { ProductTypes.Fruit, new JsonValidatableFruitFactory(x.GetRequiredService<ILogger<FruitValidator>>()) },
@@ -42,14 +43,9 @@ namespace StoreManagement.API
                                                    x.GetRequiredService<ILogger<JsonProductsLoader>>()
                                                    ));
 
-            services.AddSingleton<IOrderDetailsFactory, OrderDetailsFactory>();
-
-            services.AddSingleton<IProductsRepository>(x => 
-                            new InMemoryProductsRepository(x.GetRequiredService<IProductsLoader>()));
-
             services.AddSingleton<IOrderingService>(x => 
-                            new OrderingService(x.GetRequiredService<IProductsRepository>(),
-                                                x.GetRequiredService<IOrderDetailsFactory>(),
+                            new OrderingService(new InMemoryProductsRepository(x.GetRequiredService<IProductsLoader>()),
+                                                new OrderDetailsFactory(),
                                                 new Dictionary<EntityStatus, IErrorMessageFactory<OrderedProductDetails>>
                                                 {
                                                     { EntityStatus.UnprocessableUpdate, new OutOfStockErrorFactory() }

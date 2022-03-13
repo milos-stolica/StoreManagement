@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using StoreManagement.API.Entities;
@@ -14,16 +13,19 @@ namespace StoreManagement.API.Utils
         private readonly string filePath;
         private readonly IDictionary<string, IJsonValidatableProductFactory> validatableProductFactories;
         private readonly ILogger logger;
+        private readonly IFileReader fileReader;
 
         #endregion Fields
 
         #region Constructor
 
         public JsonProductsLoader(string filePath,
+                                  IFileReader fileReader,
                                   IDictionary<string, IJsonValidatableProductFactory> validatableProductFactories,
                                   ILogger<JsonProductsLoader> logger)
         {
             this.filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
+            this.fileReader = fileReader ?? throw new ArgumentNullException(nameof(fileReader));
             this.validatableProductFactories = validatableProductFactories ?? throw new ArgumentNullException(nameof(validatableProductFactories));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -38,7 +40,7 @@ namespace StoreManagement.API.Utils
 
             try
             {
-                string jsonString = LoadProductsJsonString();
+                string jsonString = fileReader.Read(filePath);
 
                 foreach (JObject jObject in JArray.Parse(jsonString))
                 {
@@ -69,12 +71,6 @@ namespace StoreManagement.API.Utils
         #endregion IProductsLoader members
 
         #region Private methods
-
-        private string LoadProductsJsonString()
-        {
-            StreamReader productsReader = new StreamReader(filePath);
-            return productsReader.ReadToEnd();
-        }
 
         private bool IsValidProduct(Product product)
         {
