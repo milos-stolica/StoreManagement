@@ -3,11 +3,11 @@ using StoreManagement.API.Entities;
 
 namespace StoreManagement.API.Utils
 {
-    public class CoffeeFactory : IJsonProductFactory
+    public class JsonFruitFactory : IJsonProductFactory
     {
         public Product CreateProduct(JObject jObject)
         {
-            return jObject.ToObject<Coffee>();
+            return jObject.ToObject<Fruit>();
         }
     }
 }

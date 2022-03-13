@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
-using StoreManagement.API.Common;
 using StoreManagement.API.Entities;
 
 namespace StoreManagement.API.Utils
@@ -13,8 +12,7 @@ namespace StoreManagement.API.Utils
         #region Fields
 
         private readonly string filePath;
-        private readonly IDictionary<string, IJsonProductFactory> productFactories;
-        private readonly IDictionary<string, IValidator> productValidators;
+        private readonly IDictionary<string, IJsonValidatableProductFactory> validatableProductFactories;
         private readonly ILogger logger;
 
         #endregion Fields
@@ -22,14 +20,12 @@ namespace StoreManagement.API.Utils
         #region Constructor
 
         public JsonProductsLoader(string filePath,
-                                  IDictionary<string, IJsonProductFactory> productFactories,
-                                  IDictionary<string, IValidator> productValidators,
+                                  IDictionary<string, IJsonValidatableProductFactory> validatableProductFactories,
                                   ILogger<JsonProductsLoader> logger)
         {
             this.filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
-            this.productFactories = productFactories ?? throw new ArgumentNullException(nameof(productFactories));
-            this.productValidators = productValidators ?? throw new ArgumentNullException(nameof(productValidators));
-            this.logger = logger ?? throw new ArgumentNullException(nameof(productValidators));
+            this.validatableProductFactories = validatableProductFactories ?? throw new ArgumentNullException(nameof(validatableProductFactories));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         #endregion Constructor
@@ -82,14 +78,14 @@ namespace StoreManagement.API.Utils
 
         private bool IsValidProduct(Product product)
         {
-            IValidator productValidator;
-            if (!productValidators.TryGetValue(product.Type, out productValidator))
+            IJsonValidatableProductFactory validatableProductFactory;
+            if (!validatableProductFactories.TryGetValue(product.Type, out validatableProductFactory))
             {
                 logger.LogWarning($"Validator not registered for product type: {product.Type}");
                 return false;
             }
 
-            if(!productValidator.IsValid(product))
+            if(!validatableProductFactory.Validator.IsValid(product))
             {
                 logger.LogInformation($"Some properties of {product.Sku ?? "unknown Sku"} product are not valid");
                 return false;
@@ -112,15 +108,15 @@ namespace StoreManagement.API.Utils
                 return false;
             }
 
-            IJsonProductFactory productFactory;
-            if (!productFactories.TryGetValue(productType, out productFactory))
+            IJsonValidatableProductFactory validatableProductFactory;
+            if (!validatableProductFactories.TryGetValue(productType, out validatableProductFactory))
             {
                 logger.LogWarning($"Factory not registered for product type: {productType}");
                 product = new NullProduct();
                 return false;
             }
 
-            product = productFactory.CreateProduct(jObject);
+            product = validatableProductFactory.Factory.CreateProduct(jObject);
             return true;
         }
 

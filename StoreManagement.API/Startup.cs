@@ -34,15 +34,10 @@ namespace StoreManagement.API
 
             services.AddSingleton<IProductsLoader>(x => 
                             new JsonProductsLoader("TestData.json",
-                                                   new Dictionary<string, IJsonProductFactory>
+                                                   new Dictionary<string, IJsonValidatableProductFactory>
                                                    {
-                                                       { ProductTypes.Fruit, new FruitFactory() },
-                                                       { ProductTypes.Coffee, new CoffeeFactory() }
-                                                   },
-                                                   new Dictionary<string, IValidator>
-                                                   {
-                                                       { ProductTypes.Fruit, new FruitValidator(x.GetRequiredService<ILogger<FruitValidator>>()) },
-                                                       { ProductTypes.Coffee, new CoffeeValidator(x.GetRequiredService<ILogger<CoffeeValidator>>()) }
+                                                       { ProductTypes.Fruit, new JsonValidatableFruitFactory(x.GetRequiredService<ILogger<FruitValidator>>()) },
+                                                       { ProductTypes.Coffee, new JsonValidatableCoffeeFactory(x.GetRequiredService<ILogger<CoffeeValidator>>()) }
                                                    },
                                                    x.GetRequiredService<ILogger<JsonProductsLoader>>()
                                                    ));
